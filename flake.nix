@@ -32,6 +32,7 @@
           python312Packages.pandas
           python312Packages.slack-sdk
           python312Packages.numpy
+          python311Packages.clustershell
           # Packages to be installed locally
           file
           cdrtools
