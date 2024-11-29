@@ -1,16 +1,21 @@
 {
-  description = "Python development environment";
+  description = "billy.sh Devops and NeoVim environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixvim.url = "github:wverac/nixvim";
   };
 
   outputs = {
     self,
     nixpkgs,
+    nixvim,
   }: let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      system = system;
+      config.allowUnfree = true;
+    };
   in {
     devShells.${system} = {
       default = pkgs.mkShell {
@@ -19,7 +24,7 @@
           python312Packages.python
           # Executes some shell code to initialize a venv in $venvDir before the shell
           python312Packages.venvShellHook
-          # Dependencies  from nixpkgs, which will add them to PYTHONPATH
+          # Dependencies from nixpkgs, which will add them to PYTHONPATH
           python312Packages.colored
           python312Packages.send2trash
           python312Packages.requests
@@ -51,13 +56,17 @@
           git
           openssl
           curl
+          lazygit
+          jq
+          # w00t!
+          nixvim.packages.${system}.default
         ];
 
         shellHook = ''
+          alias vim="nvim";
           echo "w00t!"
           python --version
         '';
-        # ENV vars
         LABENV = "nebuchadnezzar";
       };
     };
