@@ -1,5 +1,5 @@
 # nix-shell 
-**Python Virtual Environment**  
+**DevOps Virtual Environment**  
 
 Accessible via nix:
 ```
